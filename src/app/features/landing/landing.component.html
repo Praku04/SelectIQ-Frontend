@@ -1,0 +1,313 @@
+<div class="page-with-navbar">
+<app-navbar></app-navbar>
+
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-blue-50 via-cyan-50 to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
+  <!-- Decorative Background -->
+  <div class="absolute inset-0 overflow-hidden opacity-20 pointer-events-none">
+    <div class="absolute top-10 left-10 w-72 h-72 rounded-full mix-blend-multiply filter blur-xl animate-blob" style="background-color: #00A8E8;"></div>
+    <div class="absolute top-0 right-10 w-72 h-72 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000" style="background-color: #FF6B35;"></div>
+    <div class="absolute -bottom-8 left-20 w-72 h-72 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000" style="background-color: #33bfeb;"></div>
+  </div>
+
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+      <!-- Left Content -->
+      <div class="flex-1 text-center lg:text-left w-full">
+        <div class="inline-block mb-4 sm:mb-6">
+          <span class="inline-flex items-center px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold" style="background-color: rgba(0, 168, 232, 0.1); color: #00A8E8;">
+            <mat-icon class="!w-4 !h-4 sm:!w-5 sm:!h-5 !text-base sm:!text-xl mr-2">auto_awesome</mat-icon>
+            AI-Powered Career Intelligence
+          </span>
+        </div>
+        
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
+          Transform Your Career with
+          <span class="block mt-2 typewriter-container" style="background: linear-gradient(135deg, #00A8E8 0%, #FF6B35 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            {{ typewriterText() }}<span class="typewriter-cursor">|</span>
+          </span>
+        </h1>
+        
+        <p class="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0">
+          Optimize your resume, match with perfect jobs, and ace interviews with SelectIQ's advanced AI platform.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-4 sm:mb-6">
+          <a mat-raised-button routerLink="/auth/register" class="!text-base sm:!text-lg !px-6 sm:!px-8 !py-4 sm:!py-6 !rounded-xl shadow-lg hover:shadow-xl transition-all !h-auto !leading-normal w-full sm:w-auto" style="background: linear-gradient(135deg, #00A8E8 0%, #0087ba 100%); color: white;">
+            <mat-icon class="mr-2 !text-xl sm:!text-2xl">rocket_launch</mat-icon>
+            <span>Get Started Free</span>
+          </a>
+          <a mat-stroked-button routerLink="/pricing" class="!text-base sm:!text-lg !px-6 sm:!px-8 !py-4 sm:!py-6 !rounded-xl !h-auto !leading-normal !border-2 w-full sm:w-auto" style="border-color: #00A8E8; color: #00A8E8;">
+            <mat-icon class="mr-2 !text-xl sm:!text-2xl">visibility</mat-icon>
+            <span>View Pricing</span>
+          </a>
+        </div>
+        
+        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4 md:gap-6 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+          <div class="flex items-center">
+            <mat-icon class="!w-4 !h-4 sm:!w-5 sm:!h-5 !text-base sm:!text-xl mr-1" style="color: #00A8E8;">check_circle</mat-icon>
+            <span>No credit card required</span>
+          </div>
+          <div class="flex items-center">
+            <mat-icon class="!w-4 !h-4 sm:!w-5 sm:!h-5 !text-base sm:!text-xl mr-1" style="color: #00A8E8;">check_circle</mat-icon>
+            <span>7-day free trial</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Illustration -->
+      <div class="flex-1 w-full max-w-md lg:max-w-lg mx-auto lg:mx-0 mt-8 lg:mt-0">
+        <div class="relative">
+          <!-- Floating Card 1 -->
+          <div class="absolute -top-4 right-0 bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-2xl p-3 sm:p-4 animate-float z-20 w-48 sm:w-56">
+            <div class="flex items-center gap-2 sm:gap-3">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: rgba(0, 168, 232, 0.1);">
+                <mat-icon class="!text-xl sm:!text-2xl" style="color: #00A8E8;">check_circle</mat-icon>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900 dark:text-white text-xs sm:text-sm">ATS Score: 95%</p>
+                <p class="text-xs text-gray-600 dark:text-gray-400">Resume Optimized</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating Card 2 -->
+          <div class="absolute bottom-4 -left-4 bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-2xl p-3 sm:p-4 animate-float-delayed z-20 w-48 sm:w-56">
+            <div class="flex items-center gap-2 sm:gap-3">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background-color: rgba(255, 107, 53, 0.1);">
+                <mat-icon class="!text-xl sm:!text-2xl" style="color: #FF6B35;">work</mat-icon>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900 dark:text-white text-xs sm:text-sm">12 Job Matches</p>
+                <p class="text-xs text-gray-600 dark:text-gray-400">Found Today</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Central Logo -->
+          <div class="w-full aspect-square rounded-2xl sm:rounded-3xl shadow-2xl flex items-center justify-center relative overflow-hidden" style="background: linear-gradient(135deg, #00A8E8 0%, #0087ba 50%, #FF6B35 100%);">
+            <div class="absolute inset-0 bg-white opacity-10 animate-pulse"></div>
+            <img src="assets/images/logo.png" alt="SelectIQ" class="w-2/3 h-2/3 object-contain z-10">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="bg-white dark:bg-gray-900 py-8 sm:py-12 border-y border-gray-200 dark:border-gray-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+      @for (stat of stats; track stat.label) {
+        <div class="text-center">
+          <div class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style="color: #00A8E8;">
+            {{ stat.value }}
+          </div>
+          <div class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{{ stat.label }}</div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-12 sm:py-16 md:py-20 bg-gray-50 dark:bg-gray-800">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-8 sm:mb-12 md:mb-16">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
+        Everything You Need to Succeed
+      </h2>
+      <p class="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto px-4">
+        Powerful AI-driven tools to help you at every stage of your career journey
+      </p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      @for (feature of features; track feature.title) {
+        <mat-card class="hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-transparent hover:border-primary-300 dark:hover:border-primary-700">
+          <mat-card-content class="p-6 sm:p-8">
+            <div class="relative mb-4 sm:mb-6">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg transform rotate-3 hover:rotate-6 transition-transform">
+                <mat-icon class="!w-10 !h-10 sm:!w-12 sm:!h-12 !text-4xl sm:!text-5xl text-white">
+                  {{ feature.icon }}
+                </mat-icon>
+              </div>
+              <div class="absolute -top-2 -right-2 w-5 h-5 sm:w-6 sm:h-6 bg-yellow-400 rounded-full animate-ping opacity-75"></div>
+            </div>
+            
+            <h3 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-3">
+              {{ feature.title }}
+            </h3>
+            <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-3 sm:mb-4">
+              {{ feature.description }}
+            </p>
+            
+            <div class="flex items-center text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 transition-colors text-sm sm:text-base">
+              <span>Learn more</span>
+              <mat-icon class="!w-5 !h-5 !text-xl ml-1">arrow_forward</mat-icon>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-8 sm:mb-12 md:mb-16">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
+        How It Works
+      </h2>
+      <p class="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300">
+        Get started in three simple steps
+      </p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 relative">
+      <!-- Connection line -->
+      <div class="hidden md:block absolute top-16 left-1/4 right-1/4 h-1 bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 transform -translate-y-1/2"></div>
+      
+      <!-- Step 1 -->
+      <div class="text-center relative">
+        <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 text-white flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl relative z-10">
+          <mat-icon class="!w-12 !h-12 sm:!w-14 sm:!h-14 md:!w-16 md:!h-16 !text-5xl sm:!text-6xl">upload_file</mat-icon>
+        </div>
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 bg-blue-200 dark:bg-blue-900 rounded-full filter blur-3xl opacity-30 -z-10"></div>
+        <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-gray-900 dark:text-white">Upload Your Resume</h3>
+        <p class="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400">
+          Upload your resume in PDF or DOCX format for instant AI-powered analysis
+        </p>
+      </div>
+      
+      <!-- Step 2 -->
+      <div class="text-center relative">
+        <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 text-white flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl relative z-10">
+          <mat-icon class="!w-12 !h-12 sm:!w-14 sm:!h-14 md:!w-16 md:!h-16 !text-5xl sm:!text-6xl">auto_awesome</mat-icon>
+        </div>
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 bg-purple-200 dark:bg-purple-900 rounded-full filter blur-3xl opacity-30 -z-10"></div>
+        <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-gray-900 dark:text-white">Get AI Insights</h3>
+        <p class="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400">
+          Receive detailed ATS scores, skill gaps, and personalized recommendations instantly
+        </p>
+      </div>
+      
+      <!-- Step 3 -->
+      <div class="text-center relative">
+        <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl relative z-10">
+          <mat-icon class="!w-12 !h-12 sm:!w-14 sm:!h-14 md:!w-16 md:!h-16 !text-5xl sm:!text-6xl">celebration</mat-icon>
+        </div>
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 bg-green-200 dark:bg-green-900 rounded-full filter blur-3xl opacity-30 -z-10"></div>
+        <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-gray-900 dark:text-white">Land Your Dream Job</h3>
+        <p class="text-sm sm:text-base md:text-lg text-gray-600 dark:text-gray-400">
+          Apply with confidence using optimized resumes and comprehensive interview prep
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-8 sm:mb-12 md:mb-16">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
+        Loved by Job Seekers
+      </h2>
+      <p class="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300">
+        See how SelectIQ helped professionals land their dream jobs
+      </p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      @for (testimonial of testimonials; track testimonial.name) {
+        <mat-card class="hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+          <mat-card-content class="p-6 sm:p-8">
+            <div class="mb-3 sm:mb-4">
+              <mat-icon class="!w-10 !h-10 sm:!w-12 sm:!h-12 !text-4xl sm:!text-5xl text-primary-400 opacity-50">format_quote</mat-icon>
+            </div>
+            
+            <p class="text-base sm:text-lg text-gray-700 dark:text-gray-300 italic mb-4 sm:mb-6 leading-relaxed">
+              "{{ testimonial.quote }}"
+            </p>
+            
+            <div class="flex items-center pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center mr-3 sm:mr-4 text-white text-lg sm:text-xl font-bold shadow-lg flex-shrink-0">
+                {{ testimonial.name.charAt(0) }}
+              </div>
+              <div>
+                <p class="font-bold text-gray-900 dark:text-white text-base sm:text-lg">{{ testimonial.name }}</p>
+                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{{ testimonial.role }}</p>
+                <p class="text-xs font-semibold" style="color: #00A8E8;">{{ testimonial.company }}</p>
+              </div>
+            </div>
+            
+            <div class="flex mt-3 sm:mt-4 text-yellow-400">
+              <mat-icon class="!w-4 !h-4 sm:!w-5 sm:!h-5 !text-base sm:!text-xl">star</mat-icon>
+              <mat-icon class="!w-4 !h-4 sm:!w-5 sm:!h-5 !text-base sm:!text-xl">star</mat-icon>
+              <mat-icon class="!w-4 !h-4 sm:!w-5 sm:!h-5 !text-base sm:!text-xl">star</mat-icon>
+              <mat-icon class="!w-4 !h-4 sm:!w-5 sm:!h-5 !text-base sm:!text-xl">star</mat-icon>
+              <mat-icon class="!w-4 !h-4 sm:!w-5 sm:!h-5 !text-base sm:!text-xl">star</mat-icon>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-12 sm:py-16 md:py-20 bg-gradient-to-r from-primary-600 to-primary-700">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">
+      Ready to Transform Your Career?
+    </h2>
+    <p class="text-lg sm:text-xl md:text-2xl text-primary-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
+      Join thousands of professionals who have already accelerated their careers with SelectIQ
+    </p>
+    <a mat-raised-button class="!bg-white !text-primary-600 !text-base sm:!text-lg !px-6 sm:!px-8 !py-4 sm:!py-6 !h-auto !leading-normal" routerLink="/auth/register">
+      Start Free Trial
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-300 py-8 sm:py-12">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+      <div class="col-span-2 md:col-span-1">
+        <div class="flex items-center mb-3 sm:mb-4">
+          <img src="assets/images/logo.png" alt="SelectIQ" class="h-8 w-auto mr-2">
+        </div>
+        <p class="text-xs sm:text-sm">AI-Powered Career Intelligence for the modern professional.</p>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Product</h4>
+        <ul class="space-y-2 text-xs sm:text-sm">
+          <li><a routerLink="/pricing" class="hover:text-white transition-colors">Pricing</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Company</h4>
+        <ul class="space-y-2 text-xs sm:text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">About</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Legal</h4>
+        <ul class="space-y-2 text-xs sm:text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Privacy</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Terms</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-xs sm:text-sm">
+      <p>&copy; 2026 SelectIQ. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+</div>

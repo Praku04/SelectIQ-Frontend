@@ -1,0 +1,223 @@
+<app-navbar></app-navbar>
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="container-custom py-8">
+    <!-- Welcome Section -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        {{ getGreeting() }}, {{ currentUser()?.name }}! 👋
+      </h1>
+      <p class="text-gray-600 dark:text-gray-400">
+        Here's what's happening with your career journey
+      </p>
+    </div>
+
+    @if (loading()) {
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        @for (item of [1,2,3,4]; track item) {
+          <app-skeleton-loader type="card"></app-skeleton-loader>
+        }
+      </div>
+    } @else {
+      <!-- Stats Cards -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Resume Analyses -->
+        <mat-card class="hover:shadow-lg transition-shadow duration-300">
+          <mat-card-content class="p-6">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+                <mat-icon class="text-blue-600 dark:text-blue-300">description</mat-icon>
+              </div>
+              <span class="text-3xl font-bold text-gray-900 dark:text-white">
+                {{ stats().resumeAnalyses }}
+              </span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">Resume Analyses</p>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Job Matches -->
+        <mat-card class="hover:shadow-lg transition-shadow duration-300">
+          <mat-card-content class="p-6">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+                <mat-icon class="text-green-600 dark:text-green-300">work</mat-icon>
+              </div>
+              <span class="text-3xl font-bold text-gray-900 dark:text-white">
+                {{ stats().jobMatches }}
+              </span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">Job Matches</p>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Interview Sessions -->
+        <mat-card class="hover:shadow-lg transition-shadow duration-300">
+          <mat-card-content class="p-6">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
+                <mat-icon class="text-purple-600 dark:text-purple-300">psychology</mat-icon>
+              </div>
+              <span class="text-3xl font-bold text-gray-900 dark:text-white">
+                {{ stats().interviewSessions }}
+              </span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">Interview Sessions</p>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Coach Messages -->
+        <mat-card class="hover:shadow-lg transition-shadow duration-300">
+          <mat-card-content class="p-6">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center">
+                <mat-icon class="text-orange-600 dark:text-orange-300">support_agent</mat-icon>
+              </div>
+              <span class="text-3xl font-bold text-gray-900 dark:text-white">
+                {{ stats().careerCoachMessages }}
+              </span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">Coach Messages</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-8 mb-8">
+        <!-- Subscription Status -->
+        <div class="lg:col-span-2">
+          <mat-card>
+            <mat-card-header class="p-6 pb-0">
+              <mat-card-title class="text-xl font-semibold">Subscription Status</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="p-6">
+              @if (subscription()) {
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <p class="text-2xl font-bold text-gray-900 dark:text-white">
+                        {{ subscription().plan.name }}
+                      </p>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">
+                        {{ subscription().plan.description }}
+                      </p>
+                    </div>
+                    <mat-chip [color]="subscription().status === 'active' ? 'primary' : 'warn'">
+                      {{ subscription().status | titlecase }}
+                    </mat-chip>
+                  </div>
+
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Credits Remaining
+                      </span>
+                      <span class="text-sm font-semibold">
+                        {{ subscription().creditsRemaining }} / {{ subscription().plan.credits }}
+                      </span>
+                    </div>
+                    <mat-progress-bar 
+                      mode="determinate" 
+                      [value]="getCreditsPercentage()"
+                      [color]="getCreditsPercentage() > 20 ? 'primary' : 'warn'">
+                    </mat-progress-bar>
+                  </div>
+
+                  <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                    <div>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">Next billing date</p>
+                      <p class="font-medium">{{ subscription().currentPeriodEnd | date }}</p>
+                    </div>
+                    <a mat-stroked-button routerLink="/subscription">
+                      Manage Plan
+                    </a>
+                  </div>
+                </div>
+              } @else {
+                <div class="text-center py-8">
+                  <p class="text-gray-600 dark:text-gray-400 mb-4">No active subscription</p>
+                  <a mat-raised-button color="primary" routerLink="/pricing">
+                    Choose a Plan
+                  </a>
+                </div>
+              }
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <!-- Quick Actions -->
+        <div>
+          <mat-card>
+            <mat-card-header class="p-6 pb-0">
+              <mat-card-title class="text-xl font-semibold">Quick Actions</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="p-6">
+              <div class="space-y-3">
+                @for (action of quickActions; track action.title) {
+                  <a 
+                    [routerLink]="action.route"
+                    class="flex items-center p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200 cursor-pointer group no-underline">
+                    <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center mr-3 group-hover:scale-110 transition-transform">
+                      <mat-icon class="text-primary-600 dark:text-primary-300 !text-xl">
+                        {{ action.icon }}
+                      </mat-icon>
+                    </div>
+                    <div>
+                      <p class="font-medium text-gray-900 dark:text-white text-sm">
+                        {{ action.title }}
+                      </p>
+                      <p class="text-xs text-gray-600 dark:text-gray-400">
+                        {{ action.description }}
+                      </p>
+                    </div>
+                  </a>
+                }
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <mat-card>
+        <mat-card-header class="p-6 pb-0">
+          <mat-card-title class="text-xl font-semibold">Recent Activity</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="p-6">
+          @if (recentActivity().length > 0) {
+            <div class="space-y-4">
+              @for (activity of recentActivity(); track activity.id) {
+                <div class="flex items-start space-x-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                  <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center flex-shrink-0">
+                    <mat-icon class="text-primary-600 dark:text-primary-300">description</mat-icon>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="font-medium text-gray-900 dark:text-white">
+                      {{ activity.filename }}
+                    </p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                      ATS Score: {{ activity.score }}%
+                    </p>
+                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                      {{ activity.uploadedAt | date:'short' }}
+                    </p>
+                  </div>
+                  <a mat-icon-button routerLink="/resume/report/{{ activity.id }}">
+                    <mat-icon>arrow_forward</mat-icon>
+                  </a>
+                </div>
+              }
+            </div>
+          } @else {
+            <app-empty-state
+              icon="history"
+              title="No Recent Activity"
+              description="Start by analyzing your resume or matching it with a job description"
+              actionLabel="Upload Resume"
+              (action)="$event">
+            </app-empty-state>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>

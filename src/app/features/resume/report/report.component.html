@@ -1,0 +1,233 @@
+<div class="page-with-navbar">
+<app-navbar></app-navbar>
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="container-custom py-8">
+    @if (loading()) {
+      <app-loading-spinner [message]="'Loading your report...'"></app-loading-spinner>
+    } @else if (report()) {
+      <div class="max-w-5xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8 flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              ATS Report
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400">
+              {{ report()!.filename }} • {{ report()!.uploadedAt | date:'medium' }}
+            </p>
+          </div>
+          <div class="flex space-x-3">
+            <button mat-stroked-button routerLink="/resume/upload">
+              <mat-icon>upload</mat-icon>
+              New Analysis
+            </button>
+            <button mat-raised-button color="primary" (click)="downloadReport()">
+              <mat-icon>download</mat-icon>
+              Download Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Score Card -->
+        <mat-card class="mb-8">
+          <mat-card-content class="p-8">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                  ATS Compatibility Score
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400">
+                  Overall resume optimization score
+                </p>
+              </div>
+              <div class="text-center">
+                <div [class]="'inline-flex items-center justify-center w-32 h-32 rounded-full ' + getScoreBgColor(report()!.score)">
+                  <span [class]="'text-5xl font-bold ' + getScoreColor(report()!.score)">
+                    {{ report()!.score }}%
+                  </span>
+                </div>
+              </div>
+            </div>
+            <mat-progress-bar 
+              mode="determinate" 
+              [value]="report()!.score"
+              [color]="report()!.score >= 80 ? 'primary' : report()!.score >= 60 ? 'accent' : 'warn'">
+            </mat-progress-bar>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Strengths & Weaknesses -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+          <mat-card>
+            <mat-card-header class="p-6 pb-0">
+              <mat-card-title class="flex items-center">
+                <mat-icon class="text-green-500 mr-2">check_circle</mat-icon>
+                Strengths
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="p-6">
+              <ul class="space-y-2">
+                @for (strength of report()!.strengths; track strength) {
+                  <li class="flex items-start">
+                    <mat-icon class="text-green-500 mr-2 !text-xl">done</mat-icon>
+                    <span class="text-gray-700 dark:text-gray-300">{{ strength }}</span>
+                  </li>
+                }
+              </ul>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card>
+            <mat-card-header class="p-6 pb-0">
+              <mat-card-title class="flex items-center">
+                <mat-icon class="text-red-500 mr-2">warning</mat-icon>
+                Areas to Improve
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="p-6">
+              <ul class="space-y-2">
+                @for (weakness of report()!.weaknesses; track weakness) {
+                  <li class="flex items-start">
+                    <mat-icon class="text-red-500 mr-2 !text-xl">close</mat-icon>
+                    <span class="text-gray-700 dark:text-gray-300">{{ weakness }}</span>
+                  </li>
+                }
+              </ul>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <!-- Keywords -->
+        <mat-card class="mb-8">
+          <mat-card-header class="p-6 pb-0">
+            <mat-card-title>Keyword Analysis</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="p-6">
+            <div class="mb-6">
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-3">
+                Found Keywords
+              </h3>
+              <div class="flex flex-wrap gap-2">
+                @for (keyword of report()!.keywords.found; track keyword) {
+                  <mat-chip class="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
+                    {{ keyword }}
+                  </mat-chip>
+                }
+              </div>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900 dark:text-white mb-3">
+                Missing Keywords
+              </h3>
+              <div class="flex flex-wrap gap-2">
+                @for (keyword of report()!.keywords.missing; track keyword) {
+                  <mat-chip class="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100">
+                    {{ keyword }}
+                  </mat-chip>
+                }
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Section Analysis -->
+        <mat-card class="mb-8">
+          <mat-card-header class="p-6 pb-0">
+            <mat-card-title>Section Analysis</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="p-6">
+            <mat-accordion>
+              @for (section of report()!.sections; track section.name) {
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <div class="flex items-center justify-between w-full pr-4">
+                        <span>{{ section.name }}</span>
+                        <span [class]="'font-semibold ' + getScoreColor(section.score)">
+                          {{ section.score }}%
+                        </span>
+                      </div>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <p class="text-gray-700 dark:text-gray-300">{{ section.feedback }}</p>
+                </mat-expansion-panel>
+              }
+            </mat-accordion>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Formatting Score -->
+        <mat-card class="mb-8">
+          <mat-card-header class="p-6 pb-0">
+            <mat-card-title>Formatting & Readability</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="p-6">
+            <div class="mb-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-medium">Formatting Score</span>
+                <span [class]="'font-semibold ' + getScoreColor(report()!.formatting.score)">
+                  {{ report()!.formatting.score }}%
+                </span>
+              </div>
+              <mat-progress-bar 
+                mode="determinate" 
+                [value]="report()!.formatting.score">
+              </mat-progress-bar>
+            </div>
+            @if (report()!.formatting.issues.length > 0) {
+              <div class="mt-4">
+                <h4 class="font-semibold mb-2">Issues Found:</h4>
+                <ul class="space-y-1">
+                  @for (issue of report()!.formatting.issues; track issue) {
+                    <li class="flex items-start">
+                      <mat-icon class="text-orange-500 mr-2 !text-xl">info</mat-icon>
+                      <span class="text-gray-700 dark:text-gray-300">{{ issue }}</span>
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Suggestions -->
+        <mat-card>
+          <mat-card-header class="p-6 pb-0">
+            <mat-card-title>Recommended Actions</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="p-6">
+            <div class="space-y-4">
+              @for (suggestion of report()!.suggestions; track suggestion) {
+                <div class="flex items-start p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <mat-icon class="text-blue-600 dark:text-blue-400 mr-3">lightbulb</mat-icon>
+                  <p class="text-gray-800 dark:text-gray-200">{{ suggestion }}</p>
+                </div>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    } @else {
+      <!-- Error State -->
+      <div class="max-w-2xl mx-auto text-center py-12">
+        <mat-card>
+          <mat-card-content class="p-12">
+            <mat-icon class="!w-20 !h-20 !text-8xl text-gray-400 mb-4">error_outline</mat-icon>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              Report Not Found
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+              We couldn't load your resume report. It may have been deleted or the link is invalid.
+            </p>
+            <button mat-raised-button color="primary" routerLink="/resume/upload">
+              <mat-icon>upload</mat-icon>
+              Upload New Resume
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
+  </div>
+</div>
+</div>

@@ -1,0 +1,62 @@
+.nav-link {
+  @apply text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 
+         transition-all duration-200 no-underline;
+  
+  &.active-link {
+    color: #00A8E8 !important;
+    background-color: rgba(0, 168, 232, 0.1);
+  }
+  
+  &:hover {
+    color: #00A8E8;
+    background-color: rgba(0, 168, 232, 0.05);
+  }
+}
+
+.navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  
+  &.dark {
+    background-color: #1f2937 !important;
+  }
+}
+
+// Ensure solid background
+mat-toolbar {
+  background-color: #ffffff !important;
+  
+  &.dark {
+    background-color: #1f2937 !important;
+  }
+}
+
+// Mobile menu button - Hide on desktop (1024px and above)
+.mobile-menu-btn {
+  @media (min-width: 1024px) {
+    display: none !important;
+  }
+}
+
+// Desktop navigation - Hide on mobile/tablet (below 1024px)
+.desktop-nav {
+  @media (max-width: 1023px) {
+    display: none !important;
+  }
+}
+
+// Desktop actions - Hide on mobile/tablet (below 1024px)
+.desktop-actions {
+  @media (max-width: 1023px) {
+    display: none !important;
+  }
+}
+
+:host {
+  display: block;
+}

@@ -1,0 +1,127 @@
+<app-navbar></app-navbar>
+
+<div class="h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
+  <div class="container-custom flex-1 flex flex-col py-8 overflow-hidden">
+    <div class="mb-6 flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">AI Career Coach 🤖</h1>
+        <p class="text-gray-600 dark:text-gray-400">
+          Get personalized career advice from our AI-powered coach
+        </p>
+      </div>
+      @if (messages().length > 0) {
+        <button mat-stroked-button color="warn" (click)="clearHistory()">
+          <mat-icon>delete</mat-icon>
+          Clear History
+        </button>
+      }
+    </div>
+
+    <!-- Chat Messages -->
+    <mat-card class="flex-1 flex flex-col overflow-hidden">
+      <mat-card-content class="flex-1 p-0 overflow-hidden flex flex-col">
+        <div #messagesContainer class="flex-1 overflow-y-auto p-6 space-y-4">
+          @if (messages().length === 0) {
+            <div class="text-center py-12">
+              <mat-icon class="!w-24 !h-24 !text-8xl text-gray-400 mb-4">support_agent</mat-icon>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                Start a Conversation
+              </h3>
+              <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                Ask me anything about your career, resume, job search, or interview preparation
+              </p>
+              <div class="grid md:grid-cols-2 gap-3 max-w-2xl mx-auto">
+                <button 
+                  mat-stroked-button 
+                  class="text-left justify-start"
+                  (click)="userMessage = 'How can I improve my resume?'; sendMessage()">
+                  💼 How can I improve my resume?
+                </button>
+                <button 
+                  mat-stroked-button 
+                  class="text-left justify-start"
+                  (click)="userMessage = 'What skills should I learn?'; sendMessage()">
+                  🎓 What skills should I learn?
+                </button>
+                <button 
+                  mat-stroked-button 
+                  class="text-left justify-start"
+                  (click)="userMessage = 'How do I prepare for interviews?'; sendMessage()">
+                  🎯 How do I prepare for interviews?
+                </button>
+                <button 
+                  mat-stroked-button 
+                  class="text-left justify-start"
+                  (click)="userMessage = 'Career transition advice?'; sendMessage()">
+                  🚀 Career transition advice?
+                </button>
+              </div>
+            </div>
+          } @else {
+            @for (message of messages(); track message.id) {
+              <div 
+                class="flex"
+                [class.justify-end]="message.role === 'user'">
+                <div 
+                  class="max-w-[70%] rounded-lg p-4"
+                  [class.bg-primary-600]="message.role === 'user'"
+                  [class.text-white]="message.role === 'user'"
+                  [class.bg-gray-200]="message.role === 'assistant'"
+                  [class.dark:bg-gray-800]="message.role === 'assistant'">
+                  <div class="flex items-start space-x-2 mb-1">
+                    @if (message.role === 'assistant') {
+                      <mat-icon class="!text-xl">support_agent</mat-icon>
+                    } @else {
+                      <mat-icon class="!text-xl">person</mat-icon>
+                    }
+                    <span class="font-medium text-sm">
+                      {{ message.role === 'user' ? 'You' : 'AI Coach' }}
+                    </span>
+                  </div>
+                  <p class="whitespace-pre-wrap">{{ message.content }}</p>
+                  <span class="text-xs opacity-70 mt-2 block">
+                    {{ message.timestamp | date:'short' }}
+                  </span>
+                </div>
+              </div>
+            }
+
+            @if (typing()) {
+              <div class="flex">
+                <div class="max-w-[70%] bg-gray-200 dark:bg-gray-800 rounded-lg p-4">
+                  <div class="flex items-center space-x-2">
+                    <mat-spinner [diameter]="16"></mat-spinner>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">
+                      AI Coach is typing...
+                    </span>
+                  </div>
+                </div>
+              </div>
+            }
+          }
+        </div>
+
+        <!-- Input Area -->
+        <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+          <div class="flex space-x-2">
+            <mat-form-field class="flex-1" appearance="outline">
+              <input 
+                matInput 
+                [(ngModel)]="userMessage"
+                placeholder="Ask me anything..."
+                (keydown.enter)="sendMessage()"
+                [disabled]="loading()">
+            </mat-form-field>
+            <button 
+              mat-fab 
+              color="primary"
+              [disabled]="!userMessage.trim() || loading()"
+              (click)="sendMessage()">
+              <mat-icon>send</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

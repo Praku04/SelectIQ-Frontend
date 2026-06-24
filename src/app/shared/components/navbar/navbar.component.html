@@ -1,0 +1,157 @@
+<mat-toolbar class="navbar-fixed !bg-white dark:!bg-gray-900 !shadow-lg !p-0 !min-h-0 border-b-2" style="border-bottom-color: #00A8E8;">
+  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo - Left Side -->
+      <a routerLink="/" class="flex items-center space-x-2 flex-shrink-0">
+        <img src="assets/images/logo.png" alt="SelectIQ Logo" class="h-10 sm:h-12 w-auto">
+      </a>
+
+      <!-- Desktop Navigation - Center -->
+      <nav class="desktop-nav hidden lg:flex items-center space-x-1 mx-auto">
+        <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" class="nav-link px-4 py-2 rounded-md font-medium text-base">
+          Home
+        </a>
+        <a routerLink="/pricing" routerLinkActive="active-link" class="nav-link px-4 py-2 rounded-md font-medium text-base">
+          Pricing
+        </a>
+        <a routerLink="/about" routerLinkActive="active-link" class="nav-link px-4 py-2 rounded-md font-medium text-base">
+          About Us
+        </a>
+        <a routerLink="/contact" routerLinkActive="active-link" class="nav-link px-4 py-2 rounded-md font-medium text-base">
+          Contact Us
+        </a>
+      </nav>
+
+      <!-- Desktop Actions - Right Side -->
+      <div class="desktop-actions hidden lg:flex items-center space-x-3 flex-shrink-0">
+        <!-- Theme Toggle -->
+        <button mat-icon-button (click)="toggleTheme()" [matTooltip]="isDarkMode() ? 'Light Mode' : 'Dark Mode'" class="!w-10 !h-10">
+          <mat-icon>{{ isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        </button>
+
+        @if (isAuthenticated()) {
+          <!-- Dashboard Button -->
+          <a mat-button routerLink="/dashboard" class="!h-10 !px-4 !text-base" style="color: #00A8E8;">
+            <mat-icon class="mr-1">dashboard</mat-icon>
+            Dashboard
+          </a>
+          
+          <!-- User Menu -->
+          <button mat-button [matMenuTriggerFor]="userMenu" class="!h-10 !px-2">
+            <div class="flex items-center space-x-2">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-sm" style="background: linear-gradient(135deg, #00A8E8 0%, #FF6B35 100%);">
+                {{ currentUser()?.name ? currentUser()!.name!.charAt(0).toUpperCase() : 'U' }}
+              </div>
+              <mat-icon class="!w-5 !h-5 !text-xl">arrow_drop_down</mat-icon>
+            </div>
+          </button>
+          <mat-menu #userMenu="matMenu">
+            <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+              <p class="font-medium text-gray-900 dark:text-white">{{ currentUser()?.name }}</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">{{ currentUser()?.email }}</p>
+            </div>
+            <button mat-menu-item routerLink="/profile">
+              <mat-icon>person</mat-icon>
+              <span>Profile</span>
+            </button>
+            <button mat-menu-item routerLink="/subscription">
+              <mat-icon>subscriptions</mat-icon>
+              <span>Subscription</span>
+            </button>
+            <button mat-menu-item routerLink="/settings">
+              <mat-icon>settings</mat-icon>
+              <span>Settings</span>
+            </button>
+            @if (authService.isAdmin()) {
+              <button mat-menu-item routerLink="/admin">
+                <mat-icon>admin_panel_settings</mat-icon>
+                <span>Admin Dashboard</span>
+              </button>
+            }
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon class="text-red-600">logout</mat-icon>
+              <span class="text-red-600">Logout</span>
+            </button>
+          </mat-menu>
+        } @else {
+          <!-- Login Button -->
+          <a mat-button routerLink="/auth/login" class="!h-10 !px-5 !font-semibold !text-base" style="color: #00A8E8;">
+            Login
+          </a>
+          <!-- Sign Up Button -->
+          <a mat-raised-button routerLink="/auth/register" class="!h-10 !px-6 !font-semibold !text-white !shadow-md hover:!shadow-lg !transition-all !text-base" style="background: linear-gradient(135deg, #00A8E8 0%, #0087ba 100%);">
+            Sign Up
+          </a>
+        }
+      </div>
+
+      <!-- Mobile Menu Button - Only visible on mobile/tablet (below 1024px) -->
+      <button mat-icon-button class="mobile-menu-btn lg:hidden !w-10 !h-10" (click)="toggleMobileMenu()">
+        <mat-icon>{{ mobileMenuOpen() ? 'close' : 'menu' }}</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+
+<!-- Mobile Menu - Only visible on mobile/tablet -->
+@if (mobileMenuOpen()) {
+  <div class="lg:hidden bg-white dark:bg-gray-900 border-b-2 shadow-lg animate-slide-down" style="border-bottom-color: #00A8E8;">
+    <div class="container mx-auto px-4 py-4 space-y-1">
+      <button mat-button class="w-full justify-start !h-12 !px-4 !font-medium !text-base" (click)="navigateTo('/')">
+        <mat-icon class="mr-3">home</mat-icon>
+        Home
+      </button>
+      <button mat-button class="w-full justify-start !h-12 !px-4 !font-medium !text-base" (click)="navigateTo('/pricing')">
+        <mat-icon class="mr-3">payments</mat-icon>
+        Pricing
+      </button>
+      <button mat-button class="w-full justify-start !h-12 !px-4 !font-medium !text-base" (click)="navigateTo('/about')">
+        <mat-icon class="mr-3">info</mat-icon>
+        About Us
+      </button>
+      <button mat-button class="w-full justify-start !h-12 !px-4 !font-medium !text-base" (click)="navigateTo('/contact')">
+        <mat-icon class="mr-3">contact_mail</mat-icon>
+        Contact Us
+      </button>
+      
+      @if (isAuthenticated()) {
+        <div class="border-t border-gray-200 dark:border-gray-700 my-2 pt-2">
+          <button mat-button class="w-full justify-start !h-12 !px-4 !font-medium !text-base" (click)="navigateTo('/dashboard')">
+            <mat-icon class="mr-3">dashboard</mat-icon>
+            Dashboard
+          </button>
+          <button mat-button class="w-full justify-start !h-12 !px-4 !font-medium !text-base" (click)="navigateTo('/profile')">
+            <mat-icon class="mr-3">person</mat-icon>
+            Profile
+          </button>
+          <button mat-button class="w-full justify-start !h-12 !px-4 !font-medium !text-base" (click)="navigateTo('/settings')">
+            <mat-icon class="mr-3">settings</mat-icon>
+            Settings
+          </button>
+          @if (authService.isAdmin()) {
+            <button mat-button class="w-full justify-start !h-12 !px-4 !font-medium !text-base" (click)="navigateTo('/admin')">
+              <mat-icon class="mr-3">admin_panel_settings</mat-icon>
+              Admin Dashboard
+            </button>
+          }
+          <button mat-button class="w-full justify-start !h-12 !px-4 !font-medium !text-base text-red-600" (click)="logout()">
+            <mat-icon class="mr-3">logout</mat-icon>
+            Logout
+          </button>
+        </div>
+      } @else {
+        <div class="border-t border-gray-200 dark:border-gray-700 my-2 pt-2 space-y-2">
+          <button mat-button class="w-full !h-12 !px-4 !font-semibold !text-base" style="color: #00A8E8;" (click)="navigateTo('/auth/login')">
+            <mat-icon class="mr-3">login</mat-icon>
+            Login
+          </button>
+          <button mat-raised-button class="w-full !h-12 !px-4 !font-semibold !text-white !text-base" style="background: linear-gradient(135deg, #00A8E8 0%, #0087ba 100%);" (click)="navigateTo('/auth/register')">
+            <mat-icon class="mr-3">person_add</mat-icon>
+            Sign Up
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+}

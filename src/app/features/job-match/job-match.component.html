@@ -1,0 +1,141 @@
+<app-navbar></app-navbar>
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="container-custom py-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-8 flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Job Match Analyzer
+          </h1>
+          <p class="text-gray-600 dark:text-gray-400">
+            Compare your resume against a job description to see how well you match
+          </p>
+        </div>
+        <button mat-stroked-button routerLink="/job-match/history">
+          <mat-icon>history</mat-icon>
+          View History
+        </button>
+      </div>
+
+      <mat-card class="mb-8">
+        <mat-card-content class="p-8">
+          <form [formGroup]="matchForm" (ngSubmit)="analyzeMatch()">
+            <mat-form-field appearance="outline" class="w-full mb-6">
+              <mat-label>Select Resume</mat-label>
+              <mat-select formControlName="resumeId">
+                @if (loadingResumes()) {
+                  <mat-option disabled>Loading resumes...</mat-option>
+                } @else if (resumes().length === 0) {
+                  <mat-option disabled>No resumes found</mat-option>
+                } @else {
+                  @for (resume of resumes(); track resume.id) {
+                    <mat-option [value]="resume.id">
+                      {{ resume.filename }} (ATS Score: {{ resume.score }}%)
+                    </mat-option>
+                  }
+                }
+              </mat-select>
+              <mat-icon matPrefix>description</mat-icon>
+              @if (matchForm.get('resumeId')?.hasError('required') && matchForm.get('resumeId')?.touched) {
+                <mat-error>Please select a resume</mat-error>
+              }
+              <mat-hint>
+                @if (resumes().length === 0) {
+                  <a routerLink="/resume/upload" class="text-primary-600">Upload a resume first</a>
+                }
+              </mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full mb-6">
+              <mat-label>Job Description</mat-label>
+              <textarea 
+                matInput 
+                formControlName="jobDescription"
+                rows="15"
+                placeholder="Paste the full job description here...
+
+Example:
+We are seeking a Senior Software Engineer with 5+ years of experience in:
+- Python, JavaScript, React
+- AWS, Docker, Kubernetes
+- RESTful APIs, Microservices
+..."></textarea>
+              @if (matchForm.get('jobDescription')?.hasError('required') && matchForm.get('jobDescription')?.touched) {
+                <mat-error>Job description is required</mat-error>
+              }
+              @if (matchForm.get('jobDescription')?.hasError('minlength') && matchForm.get('jobDescription')?.touched) {
+                <mat-error>Job description must be at least 50 characters</mat-error>
+              }
+              <mat-hint align="end">
+                {{ matchForm.get('jobDescription')?.value?.length || 0 }} characters
+              </mat-hint>
+            </mat-form-field>
+
+            <div class="flex justify-end">
+              <button 
+                mat-raised-button 
+                color="primary"
+                type="submit"
+                [disabled]="matchForm.invalid || loading()">
+                @if (loading()) {
+                  <span>Analyzing...</span>
+                } @else {
+                  <mat-icon>analytics</mat-icon>
+                  <span>Analyze Match</span>
+                }
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Info Section -->
+      <mat-card>
+        <mat-card-header class="p-6 pb-0">
+          <mat-card-title>What We Analyze</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="p-6">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="flex items-start space-x-3">
+              <mat-icon class="text-primary-600 dark:text-primary-400">analytics</mat-icon>
+              <div>
+                <h3 class="font-semibold mb-1">Match Score</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Overall compatibility percentage based on skills and experience
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <mat-icon class="text-primary-600 dark:text-primary-400">done_all</mat-icon>
+              <div>
+                <h3 class="font-semibold mb-1">Skills Comparison</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  See which required skills you have and which are missing
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <mat-icon class="text-primary-600 dark:text-primary-400">trending_up</mat-icon>
+              <div>
+                <h3 class="font-semibold mb-1">Strength Areas</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Identify your strongest qualifications for this role
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start space-x-3">
+              <mat-icon class="text-primary-600 dark:text-primary-400">lightbulb</mat-icon>
+              <div>
+                <h3 class="font-semibold mb-1">Recommendations</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Get personalized tips to improve your match score
+                </p>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
